@@ -1,0 +1,8 @@
+# Managed by Ansible (alerts role).
+[Unit]
+Description=Daily check: disk space and failed units
+OnFailure=sofabox-alert@%n.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sofabox-daily-check

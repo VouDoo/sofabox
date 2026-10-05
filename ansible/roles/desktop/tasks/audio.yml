@@ -1,0 +1,16 @@
+- name: Create the audio settings folder
+  ansible.builtin.file:
+    path: "{{ box_home }}/.config/wireplumber/wireplumber.conf.d"
+    state: directory
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0755"
+
+- name: Send sound to the TV (HDMI profile)
+  ansible.builtin.copy:
+    src: wireplumber-hdmi.conf
+    dest: "{{ box_home }}/.config/wireplumber/wireplumber.conf.d/51-sofabox-hdmi.conf"
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0644"
+  notify: Restart the audio session

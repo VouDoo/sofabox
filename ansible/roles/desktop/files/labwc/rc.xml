@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- Managed by Ansible (desktop role). labwc: keybinds and window rules. -->
+<labwc_config>
+  <keyboard>
+    <!-- Press and release Super alone: open the app menu (menu role). -->
+    <keybind key="Super_L" onRelease="yes">
+      <action name="Execute" command="sofabox-menu"/>
+    </keybind>
+    <keybind key="W-q">
+      <action name="Close"/>
+    </keybind>
+    <keybind key="A-Tab">
+      <action name="NextWindow"/>
+    </keybind>
+    <keybind key="XF86AudioRaiseVolume">
+      <action name="Execute" command="sofabox-volume up"/>
+    </keybind>
+    <keybind key="XF86AudioLowerVolume">
+      <action name="Execute" command="sofabox-volume down"/>
+    </keybind>
+    <keybind key="XF86AudioMute">
+      <action name="Execute" command="sofabox-volume mute"/>
+    </keybind>
+  </keyboard>
+  <windowRules>
+    <!-- TV style: Brave and the terminal have no title bar and fill the screen. Other windows are left alone. -->
+    <windowRule identifier="brave*" serverDecoration="no">
+      <action name="Maximize"/>
+    </windowRule>
+    <windowRule identifier="foot" serverDecoration="no">
+      <action name="Maximize"/>
+    </windowRule>
+  </windowRules>
+</labwc_config>

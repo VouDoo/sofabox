@@ -1,0 +1,3 @@
+# Shared by every role. Not settings: derived from how Ansible connects (host_vars/box/connection.yml).
+box_user: "{{ ansible_user }}"
+box_home: "/home/{{ box_user }}"

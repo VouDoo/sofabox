@@ -1,0 +1,13 @@
+# Safe to apply: Ansible itself only connects with an SSH key, so a working key is already in place.
+- name: Allow SSH logins with keys only, never as root
+  ansible.builtin.copy:
+    src: sshd-sofabox.conf
+    dest: /etc/ssh/sshd_config.d/10-sofabox.conf
+    mode: "0600"
+  notify: Reload SSH
+
+- name: Start the SSH server now and at boot
+  ansible.builtin.systemd_service:
+    name: sshd
+    state: started
+    enabled: true

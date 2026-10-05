@@ -1,0 +1,16 @@
+- name: Enable the RPM Fusion repositories (free and nonfree)
+  ansible.builtin.dnf5:
+    name: "{{ base_rpmfusion_release_urls }}"
+    state: present
+    # Only these two release packages are unsigned; everything installed from RPM Fusion is checked.
+    disable_gpg_check: true
+
+- name: Install the base tools
+  ansible.builtin.dnf5:
+    name: "{{ base_packages }}"
+    state: present
+
+- name: Install the Intel and AMD video drivers (hardware video decoding)
+  ansible.builtin.dnf5:
+    name: "{{ base_video_drivers }}"
+    state: present

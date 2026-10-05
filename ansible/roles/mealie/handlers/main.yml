@@ -1,0 +1,13 @@
+# systemd turns mealie.container into mealie.service when it reloads.
+# The systemd module can't reach another user's services, hence the commands.
+- name: Reload the user's services
+  ansible.builtin.command: # noqa: command-instead-of-module
+    cmd: systemctl --user --machine={{ box_user }}@ daemon-reload
+  changed_when: true
+  listen: Restart Mealie
+
+- name: Restart the Mealie service
+  ansible.builtin.command: # noqa: command-instead-of-module
+    cmd: systemctl --user --machine={{ box_user }}@ restart mealie.service
+  changed_when: true
+  listen: Restart Mealie

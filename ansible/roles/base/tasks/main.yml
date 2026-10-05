@@ -1,0 +1,14 @@
+- name: Install the packages
+  ansible.builtin.import_tasks: packages.yml
+
+- name: Secure SSH
+  ansible.builtin.import_tasks: ssh.yml
+
+- name: Set up the firewall
+  ansible.builtin.import_tasks: firewall.yml
+
+- name: Set up nightly updates
+  ansible.builtin.import_tasks: updates.yml
+
+- name: Set up power
+  ansible.builtin.import_tasks: power.yml

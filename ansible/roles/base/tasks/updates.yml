@@ -1,0 +1,43 @@
+- name: Install the automatic updates tool
+  ansible.builtin.dnf5:
+    name: dnf5-plugin-automatic
+    state: present
+
+- name: Apply all updates, and reboot only when an update needs it
+  ansible.builtin.copy:
+    src: automatic.conf
+    dest: /etc/dnf/automatic.conf
+    mode: "0644"
+
+- name: Create the folder for the updates timer settings
+  ansible.builtin.file:
+    path: /etc/systemd/system/dnf5-automatic.timer.d
+    state: directory
+    mode: "0755"
+
+- name: Run the updates every night at {{ updates_time }}
+  ansible.builtin.template:
+    src: dnf5-automatic-timer.conf.j2
+    dest: /etc/systemd/system/dnf5-automatic.timer.d/10-sofabox.conf
+    mode: "0644"
+  notify: Restart the updates timer
+
+- name: Start the updates timer now and at boot
+  ansible.builtin.systemd_service:
+    name: dnf5-automatic.timer
+    state: started
+    enabled: true
+    daemon_reload: true
+
+- name: Create the folder for the updates service settings
+  ansible.builtin.file:
+    path: /etc/systemd/system/dnf5-automatic.service.d
+    state: directory
+    mode: "0755"
+
+- name: Alert if the nightly updates fail (alerts role)
+  ansible.builtin.copy:
+    src: dnf5-automatic-alert.conf
+    dest: /etc/systemd/system/dnf5-automatic.service.d/10-sofabox-alert.conf
+    mode: "0644"
+  notify: Restart the updates timer

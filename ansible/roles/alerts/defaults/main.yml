@@ -1,0 +1,5 @@
+alerts_ntfy_server: https://ntfy.sh
+# Daily check, in the daytime: disk space, and units still failed.
+alerts_daily_check_time: "09:00"
+# It alerts when a disk is fuller than this.
+alerts_disk_percent: 90

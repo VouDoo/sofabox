@@ -1,0 +1,13 @@
+# Managed by Ansible (desktop role). On-screen notifications, readable from the couch. Same grays as the menu.
+font=Noto Sans 28
+anchor=top-center
+width=600
+margin=40
+padding=20
+border-size=1
+border-color=#3a3a3c
+border-radius=20
+background-color=#1c1c1ef2
+text-color=#f2f2f7
+progress-color=over #8e8e93
+default-timeout=3000

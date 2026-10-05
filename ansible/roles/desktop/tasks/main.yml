@@ -1,0 +1,16 @@
+- name: Install the desktop packages
+  ansible.builtin.dnf5:
+    name: "{{ desktop_packages }}"
+    state: present
+
+- name: Log in automatically and start the desktop
+  ansible.builtin.import_tasks: autologin.yml
+
+- name: Set up labwc and the screens
+  ansible.builtin.import_tasks: labwc.yml
+
+- name: Set up the volume keys and notifications
+  ansible.builtin.import_tasks: volume.yml
+
+- name: Send sound to the TV (HDMI)
+  ansible.builtin.import_tasks: audio.yml

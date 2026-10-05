@@ -1,0 +1,30 @@
+# Restarts the console, which restarts the whole TV session (autologin → labwc).
+# Open apps are closed. Needed when labwc's startup files change: it only reads them at start.
+- name: Restart the TV session
+  ansible.builtin.systemd_service:
+    name: getty@tty1
+    state: restarted
+    daemon_reload: true
+
+# labwc re-reads rc.xml on SIGHUP, without closing any window.
+- name: Reload labwc
+  ansible.builtin.command: pkill --signal HUP --exact labwc
+  register: desktop_reload_labwc
+  changed_when: desktop_reload_labwc.rc == 0
+  failed_when: false
+
+# WirePlumber reads its rules at startup. Does nothing if the user session isn't running.
+# The systemd module can't reach another user's session, hence the command.
+- name: Restart the audio session
+  ansible.builtin.command: # noqa: command-instead-of-module
+    cmd: systemctl --user --machine={{ box_user }}@ restart wireplumber
+  register: desktop_restart_audio
+  changed_when: desktop_restart_audio.rc == 0
+  failed_when: false
+
+# kanshi re-reads its config on SIGHUP and applies it right away.
+- name: Reload the screen settings
+  ansible.builtin.command: pkill --signal HUP --exact kanshi
+  register: desktop_reload_kanshi
+  changed_when: desktop_reload_kanshi.rc == 0
+  failed_when: false

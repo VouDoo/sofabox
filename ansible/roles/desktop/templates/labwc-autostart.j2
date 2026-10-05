@@ -1,0 +1,12 @@
+# Managed by Ansible (desktop role). Started by labwc, once per session.
+kanshi >/dev/null 2>&1 &
+swaybg --image /usr/local/share/sofabox/background.jpg --mode fill >/dev/null 2>&1 &
+mako >/dev/null 2>&1 &
+# Screen off after {{ idle_minutes }} min idle{{ ', browser closed after ' ~ close_browser_minutes ~ ' min' if close_browser_minutes | int else '' }}.
+# A playing video blocks both. SIGTERM to the oldest brave process = Brave closing itself cleanly.
+swayidle -w \
+  timeout {{ idle_minutes | int * 60 }} 'wlopm --off "*"' resume 'wlopm --on "*"' \
+{% if close_browser_minutes | int %}
+  timeout {{ close_browser_minutes | int * 60 }} 'pkill --oldest --exact brave' \
+{% endif %}
+  >/dev/null 2>&1 &

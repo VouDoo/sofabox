@@ -1,0 +1,16 @@
+- name: Install Podman
+  ansible.builtin.dnf5:
+    name: podman
+    state: present
+
+# Without this, the user's services (the containers) only run while someone is logged in.
+- name: Let the box user's services run without a login session (lingering)
+  ansible.builtin.command: loginctl enable-linger {{ box_user }}
+  args:
+    creates: /var/lib/systemd/linger/{{ box_user }}
+
+- name: Create the folder for the services' data
+  ansible.builtin.file:
+    path: /srv/sofabox
+    state: directory
+    mode: "0755"

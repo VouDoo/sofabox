@@ -1,0 +1,5 @@
+# Managed by Ansible (base role). Run the automatic updates at night.
+[Timer]
+OnCalendar=
+OnCalendar=*-*-* {{ updates_time }}
+RandomizedDelaySec=0

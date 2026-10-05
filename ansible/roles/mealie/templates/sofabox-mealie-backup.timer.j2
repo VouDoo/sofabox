@@ -1,0 +1,11 @@
+# Managed by Ansible (mealie role). Next run: systemctl list-timers sofabox-mealie-backup
+[Unit]
+Description=Nightly Mealie backup at {{ backups_time }}
+
+[Timer]
+OnCalendar=*-*-* {{ backups_time }}
+# If the box was off at that time, run at the next boot.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

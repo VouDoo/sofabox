@@ -1,0 +1,8 @@
+{# Managed by Ansible (menu role), from `apps` in settings.yml. One app per line: name <TAB> mode <TAB> url or command #}
+{% for app in apps if app.service is not defined or app.service in services %}
+{% if app.command is defined %}
+{{ app.name }}	run	{{ app.command }}
+{% else %}
+{{ app.name }}	{{ 'tabs' if app.tabs | default(false) else 'app' }}	{{ app.url }}
+{% endif %}
+{% endfor %}

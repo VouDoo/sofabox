@@ -1,0 +1,4 @@
+# The box. Its address and user live in host_vars/box/connection.yml, created by `mise run setup`.
+all:
+  hosts:
+    box:

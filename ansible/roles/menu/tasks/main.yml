@@ -1,0 +1,44 @@
+- name: Install the menu packages
+  ansible.builtin.dnf5:
+    name: "{{ menu_packages }}"
+    state: present
+
+- name: Create the folder for the menu's settings
+  ansible.builtin.file:
+    path: /etc/sofabox
+    state: directory
+    mode: "0755"
+
+- name: Write the app list from settings.yml
+  ansible.builtin.template:
+    src: apps.tsv.j2
+    dest: /etc/sofabox/apps.tsv
+    mode: "0644"
+
+- name: Write the search address from settings.yml
+  ansible.builtin.template:
+    src: menu.env.j2
+    dest: /etc/sofabox/menu.env
+    mode: "0644"
+
+- name: Install the menu command (Super key)
+  ansible.builtin.copy:
+    src: sofabox-menu.sh
+    dest: /usr/local/bin/sofabox-menu
+    mode: "0755"
+
+- name: Create the fuzzel config folder
+  ansible.builtin.file:
+    path: "{{ box_home }}/.config/fuzzel"
+    state: directory
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0755"
+
+- name: Configure the menu (fuzzel)
+  ansible.builtin.copy:
+    src: fuzzel.ini
+    dest: "{{ box_home }}/.config/fuzzel/fuzzel.ini"
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0644"

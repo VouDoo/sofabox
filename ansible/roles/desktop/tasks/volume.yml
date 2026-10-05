@@ -1,0 +1,21 @@
+- name: Install the volume command used by the keyboard's media keys
+  ansible.builtin.copy:
+    src: sofabox-volume.sh
+    dest: /usr/local/bin/sofabox-volume
+    mode: "0755"
+
+- name: Create the notifications config folder
+  ansible.builtin.file:
+    path: "{{ box_home }}/.config/mako"
+    state: directory
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0755"
+
+- name: Configure the on-screen notifications (mako)
+  ansible.builtin.copy:
+    src: mako-config
+    dest: "{{ box_home }}/.config/mako/config"
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0644"

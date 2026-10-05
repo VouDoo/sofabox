@@ -1,0 +1,11 @@
+{#- From `localectl status`, e.g. "X11 Layout: de,us" and "X11 Variant: ,". Missing or "(unset)": xkb's default (us). -#}
+{%- set layout = desktop_localectl.stdout | regex_search('X11 Layout: *([^\s(]\S*)', '\\1') -%}
+{%- set variant = desktop_localectl.stdout | regex_search('X11 Variant: *([^\s(]\S*)', '\\1') -%}
+# Managed by Ansible (desktop role). Read by labwc at startup.
+# The keyboard layout chosen at the Fedora install. To change it: `localectl set-x11-keymap`, then deploy.
+{% if layout %}
+XKB_DEFAULT_LAYOUT={{ layout | first }}
+{% endif %}
+{% if variant and (variant | first | replace(',', '')) %}
+XKB_DEFAULT_VARIANT={{ variant | first }}
+{% endif %}

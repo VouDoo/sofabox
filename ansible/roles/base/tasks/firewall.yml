@@ -1,0 +1,17 @@
+- name: Install firewalld
+  ansible.builtin.dnf5:
+    name: firewalld
+    state: present
+
+- name: Start firewalld now and at boot
+  ansible.builtin.systemd_service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Allow SSH through the firewall
+  ansible.posix.firewalld:
+    service: ssh
+    permanent: true
+    immediate: true
+    state: enabled

@@ -1,0 +1,3 @@
+# Managed by Ansible (base role). Stop charging at {{ battery_charge_limit }}%: the laptop is always plugged in.
+# Every battery that supports a limit (BAT0, BAT1…). Nothing matches on a desktop: the line is skipped.
+w /sys/class/power_supply/BAT*/charge_control_end_threshold - - - - {{ battery_charge_limit }}

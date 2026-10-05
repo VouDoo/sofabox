@@ -1,0 +1,22 @@
+# A laptop's own screen (the usual name), behind the closed lid: switched off when the TV is connected.
+# Not a setting: without it (a desktop), kanshi's "tv" profile applies.
+desktop_laptop_output: eDP-1
+
+desktop_packages:
+  - labwc # the desktop (Wayland compositor)
+  - mesa-dri-drivers # GPU drivers for labwc and Brave
+  - xorg-x11-server-Xwayland # labwc refuses to start without it; only runs if an X11 app needs it
+  - swaybg # background image
+  - swayidle # turns the screen off when idle
+  - kanshi # screen settings (TV mode and scale, laptop screen off), re-applied when the TV reconnects
+  - wlr-randr # screen info (diagnostics)
+  - wlopm # screen on/off command used by swayidle
+  - mako # on-screen notifications (volume…)
+  - libnotify # notify-send, to talk to mako
+  - pipewire # audio
+  - wireplumber
+  - pipewire-pulseaudio # audio for apps using the PulseAudio API (Brave)
+  - pipewire-utils # pw-dump, pw-cli: audio diagnostics (no daemon)
+  - google-noto-sans-fonts
+  - google-noto-sans-mono-fonts # for the terminal
+  - foot # terminal

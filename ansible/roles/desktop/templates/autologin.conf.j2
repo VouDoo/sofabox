@@ -1,0 +1,4 @@
+# Managed by Ansible (desktop role). Log {{ box_user }} in automatically on tty1.
+[Service]
+ExecStart=
+ExecStart=-/usr/sbin/agetty --autologin {{ box_user }} --noclear %I $TERM

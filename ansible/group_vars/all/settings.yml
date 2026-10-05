@@ -1,0 +1,58 @@
+# The default settings, for every box. Don't edit them here: put the ones you change in
+# ansible/host_vars/box/settings.yml (git-ignored, created by `mise run setup`), which overrides them.
+# Secrets go in ansible/host_vars/box/secrets.yml (git-ignored), never here.
+
+# Super-key menu entries. Each `url` opens as its own fullscreen app window, except:
+#   tabs: true   opens a normal browser window with tabs and an address bar
+# An entry with `command` instead of `url` runs that program.
+#   service: X   only shown when X is in `services` below
+apps:
+  - name: YouTube
+    url: https://www.youtube.com
+  - name: Netflix
+    url: https://www.netflix.com
+  - name: Disney+
+    url: https://www.disneyplus.com
+  - name: Twitch
+    url: https://www.twitch.tv
+  - name: Mealie
+    url: http://127.0.0.1:9000
+    service: mealie
+  - name: Web browser
+    url: https://search.brave.com
+    tabs: true
+  - name: Terminal
+    command: foot
+
+# Self-hosted services, each in its own container, with its nightly backup. [] for none.
+# One per service role in ansible/roles/: its README.md says what it is and what it needs.
+# Taking one off the list stops deploying it, but doesn't remove it from a box where it already runs.
+services:
+  - mealie
+
+# Typed text in the menu that is not a URL is searched here (%s = the text).
+search_url: https://search.brave.com/search?q=%s
+
+# TV picture, for any TV.
+#   tv_mode   resolution sent to the TV. 1080p at 60 Hz works on practically every TV and PC
+#             (many older PCs only drive 4K at 30 Hz). Empty: the TV's own preferred mode.
+#   tv_scale  size of everything on screen: 1, 1.25, 1.5, 2…
+tv_mode: 1920x1080@60Hz
+tv_scale: 1
+
+# Turn the screen off after this many minutes without activity (never during video).
+idle_minutes: 15
+
+# Close the browser after this many minutes without activity, to free memory. 0: never.
+# A playing video counts as activity.
+close_browser_minutes: 60
+
+# Nightly backups of the services run at this time, before or after `updates_time`, but not
+# at the same time: leave a gap so each one finishes before the other starts.
+backups_time: "02:00"
+
+# Nightly updates (all packages) run at this time (the box reboots afterwards only when needed).
+updates_time: "02:15"
+
+# Laptops: stop charging the battery at this percentage (the box is always plugged in). Ignored on a desktop.
+battery_charge_limit: 80

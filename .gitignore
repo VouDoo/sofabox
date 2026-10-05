@@ -1,0 +1,12 @@
+# Everything private to the box, per control machine, created by `mise run setup`:
+# its address, its own settings and its secrets (decision 0016)
+ansible/host_vars/
+
+# Copies of the box's backups (`mise run fetch-backups`)
+backups/
+
+# Ansible leftovers
+*.retry
+
+# Ansible / ansible-lint cache
+.ansible/

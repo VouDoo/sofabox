@@ -1,0 +1,8 @@
+# Managed by Ansible (alerts role). Alert on failure: add `OnFailure=sofabox-alert@%n.service` to a unit.
+# Installed for system services and for user services (the containers run as the box user).
+[Unit]
+Description=Alert: %i failed
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sofabox-alert "%i failed" "Details on the box: journalctl -u %i (add --user for a container's service)"

@@ -1,0 +1,33 @@
+- name: Trust Brave's package signing key
+  ansible.builtin.rpm_key:
+    key: "{{ browser_key_url }}"
+    state: present
+
+- name: Add Brave's package repository
+  ansible.builtin.get_url:
+    url: "{{ browser_repo_url }}"
+    dest: /etc/yum.repos.d/brave-browser.repo
+    mode: "0644"
+
+- name: Install Brave Origin
+  ansible.builtin.dnf5:
+    name: "{{ browser_package }}"
+    state: present
+
+- name: Create the folder for Brave's managed policies
+  ansible.builtin.file:
+    path: "{{ browser_policy_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Apply the box's browser policies (no sign-in or prompts, nothing running in the background)
+  ansible.builtin.copy:
+    src: policies.json
+    dest: "{{ browser_policy_dir }}/sofabox.json"
+    mode: "0644"
+
+- name: Install the command that opens sites as TV apps
+  ansible.builtin.copy:
+    src: sofabox-browser.sh
+    dest: /usr/local/bin/sofabox-browser
+    mode: "0755"

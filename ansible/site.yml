@@ -1,0 +1,29 @@
+# Turns a fresh Fedora (minimal) install into the box.
+# Roles run in this order.
+# Apply a single role with its tag: `mise run deploy -- --tags desktop`.
+
+# A minimal Fedora may lack what Ansible itself needs on the box, so install it first.
+# It runs even during `mise run check`: without it, nothing else can be checked.
+- name: Prepare the box for Ansible
+  hosts: box
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install Python and the dnf5 bindings Ansible needs
+      ansible.builtin.raw: dnf5 install --assumeyes python3 python3-libdnf5
+      register: bootstrap
+      changed_when: "'Nothing to do' not in bootstrap.stdout"
+      check_mode: false
+      tags: always
+
+- name: Configure the living-room box
+  hosts: box
+  become: true
+  roles:
+    - { role: alerts, tags: alerts } # first: every later role's units alert through it
+    - { role: base, tags: base }
+    - { role: desktop, tags: desktop }
+    - { role: browser, tags: browser }
+    - { role: menu, tags: menu }
+    # Services, only those listed in `services` (settings.yml). Each one brings Podman with it.
+    - { role: mealie, tags: mealie, when: "'mealie' in services" }

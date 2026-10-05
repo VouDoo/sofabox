@@ -1,0 +1,10 @@
+# Managed by Ansible (alerts role).
+[Unit]
+Description=Daily check at {{ alerts_daily_check_time }}
+
+[Timer]
+OnCalendar=*-*-* {{ alerts_daily_check_time }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,28 @@
+- name: Create the folder for the login manager settings
+  ansible.builtin.file:
+    path: /etc/systemd/logind.conf.d
+    state: directory
+    mode: "0755"
+
+- name: Ignore the laptop lid, which stays closed next to the TV (applies after the next reboot)
+  ansible.builtin.copy:
+    src: logind-sofabox.conf
+    dest: /etc/systemd/logind.conf.d/10-sofabox.conf
+    mode: "0644"
+
+- name: Never suspend or hibernate (decision 0005)
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    masked: true
+  loop:
+    - sleep.target
+    - suspend.target
+    - hibernate.target
+    - hybrid-sleep.target
+
+- name: Stop charging the battery at {{ battery_charge_limit }}%
+  ansible.builtin.template:
+    src: battery-charge-limit.conf.j2
+    dest: /etc/tmpfiles.d/battery-charge-limit.conf
+    mode: "0644"
+  notify: Apply the battery charge limit

@@ -1,0 +1,18 @@
+# Managed by Ansible (desktop role). Screen settings, re-applied whenever a screen (dis)connects.
+# kanshi applies the first profile, in this order, that has as many screens as are connected.
+
+# Laptop + TV: TV only, so popups, the menu and apps never open on the hidden laptop screen.
+profile laptop-tv {
+  output {{ desktop_laptop_output }} disable
+  output * {{ ('mode ' ~ tv_mode ~ ' ') if tv_mode else '' }}scale {{ tv_scale }}
+}
+
+# Laptop without a TV: keep the laptop screen, so the box stays usable.
+profile laptop {
+  output {{ desktop_laptop_output }} enable
+}
+
+# Any other single screen: the TV of a desktop PC.
+profile tv {
+  output * {{ ('mode ' ~ tv_mode ~ ' ') if tv_mode else '' }}scale {{ tv_scale }}
+}

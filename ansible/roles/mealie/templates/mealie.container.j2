@@ -1,0 +1,32 @@
+# Managed by Ansible (mealie role). Mealie, the recipe manager: http://<box>:{{ mealie_port }}
+# Status: systemctl --user status mealie · Logs: journalctl --user -u mealie
+[Unit]
+Description=Mealie (recipes)
+# Alert if it fails for good (it's restarted automatically first).
+OnFailure=sofabox-alert@%n.service
+
+[Container]
+Image=ghcr.io/mealie-recipes/mealie:{{ mealie_version }}
+ContainerName=mealie
+# IPv4 only: Mealie doesn't listen on IPv6 inside the container, so pasta (Podman's network
+# helper) accepted IPv6 connections and then dropped them, and clients don't fall back after that.
+# With pasta in IPv4-only mode, IPv6 is refused at once and every client falls back to IPv4.
+Network=pasta:--ipv4-only
+PublishPort={{ mealie_port }}:9000
+# :Z labels the folder for SELinux.
+Volume={{ mealie_data_dir }}:/app/data:Z
+Volume=/etc/localtime:/etc/localtime:ro
+# Run as the container's root, which is the box user on the host (rootless Podman),
+# so the data in {{ mealie_data_dir }} belongs to {{ box_user }}.
+Environment=PUID=0
+Environment=PGID=0
+Environment=ALLOW_SIGNUP=false
+Environment=BASE_URL=http://{{ ansible_host }}:{{ mealie_port }}
+
+[Service]
+Restart=always
+# The first start downloads the image, which takes a while.
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target

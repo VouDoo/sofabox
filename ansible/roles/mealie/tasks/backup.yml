@@ -1,0 +1,47 @@
+# The API token can only be created in Mealie itself, once it runs: until `mise run setup`
+# has stored it, the backup is skipped.
+- name: Tell how to enable the nightly backup
+  ansible.builtin.debug:
+    msg: >-
+      Nightly Mealie backup not set up yet: create an API token in Mealie
+      (Profile → API Tokens), run `mise run setup`, then deploy again.
+  when: mealie_api_token is not defined
+
+- name: Set up the nightly backup
+  when: mealie_api_token is defined
+  block:
+    - name: Create the folder for the box's settings
+      ansible.builtin.file:
+        path: /etc/sofabox
+        state: directory
+        mode: "0755"
+
+    - name: Install the backup command
+      ansible.builtin.copy:
+        src: sofabox-mealie-backup.sh
+        dest: /usr/local/bin/sofabox-mealie-backup
+        mode: "0755"
+
+    - name: Give the backup command Mealie's address and token (readable by the box user only)
+      ansible.builtin.template:
+        src: mealie-backup.env.j2
+        dest: /etc/sofabox/mealie-backup.env
+        owner: "{{ box_user }}"
+        group: "{{ box_user }}"
+        mode: "0600"
+
+    - name: Describe the backup service and its nightly timer
+      ansible.builtin.template:
+        src: "{{ item }}.j2"
+        dest: /etc/systemd/system/{{ item }}
+        mode: "0644"
+      loop:
+        - sofabox-mealie-backup.service
+        - sofabox-mealie-backup.timer
+
+    - name: Start the nightly timer at {{ backups_time }}
+      ansible.builtin.systemd_service:
+        name: sofabox-mealie-backup.timer
+        state: started
+        enabled: true
+        daemon_reload: true

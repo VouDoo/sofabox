@@ -1,0 +1,5 @@
+browser_key_url: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+browser_repo_url: https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+browser_package: brave-origin
+# Where Brave reads managed policies (Brave Origin too: checked in its binary).
+browser_policy_dir: /etc/brave/policies/managed

@@ -1,0 +1,8 @@
+# Exact version: Mealie publishes no major-version tag, and an update can migrate its database.
+# To update: change it here, then `mise run deploy -- --tags mealie`.
+mealie_version: v3.28.0
+mealie_port: 9000
+mealie_data_dir: /srv/sofabox/mealie
+
+# Nightly backups (Mealie's own format), at `backups_time`.
+mealie_backups_keep: 14

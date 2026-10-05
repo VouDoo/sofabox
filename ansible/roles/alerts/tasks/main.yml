@@ -1,0 +1,50 @@
+- name: Create the folder for the box's settings
+  ansible.builtin.file:
+    path: /etc/sofabox
+    state: directory
+    mode: "0755"
+
+- name: Give sofabox-alert the private ntfy topic (readable by root and the box user only)
+  ansible.builtin.template:
+    src: alerts.env.j2
+    dest: /etc/sofabox/alerts.env
+    owner: root
+    group: "{{ box_user }}"
+    mode: "0640"
+
+- name: Install the alert commands
+  ansible.builtin.copy:
+    src: "{{ item }}.sh"
+    dest: /usr/local/bin/{{ item }}
+    mode: "0755"
+  loop:
+    - sofabox-alert
+    - sofabox-daily-check
+
+- name: Install the alert-on-failure unit, for system and user services
+  ansible.builtin.copy:
+    src: sofabox-alert@.service
+    dest: "{{ item }}/sofabox-alert@.service"
+    mode: "0644"
+  loop:
+    - /etc/systemd/system
+    - /etc/systemd/user
+
+- name: Describe the daily check
+  ansible.builtin.copy:
+    src: sofabox-daily-check.service
+    dest: /etc/systemd/system/sofabox-daily-check.service
+    mode: "0644"
+
+- name: Schedule the daily check
+  ansible.builtin.template:
+    src: sofabox-daily-check.timer.j2
+    dest: /etc/systemd/system/sofabox-daily-check.timer
+    mode: "0644"
+
+- name: Start the daily check timer
+  ansible.builtin.systemd_service:
+    name: sofabox-daily-check.timer
+    state: started
+    enabled: true
+    daemon_reload: true

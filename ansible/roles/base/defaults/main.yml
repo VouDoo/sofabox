@@ -1,0 +1,13 @@
+base_fedora_version: "{{ ansible_facts['distribution_major_version'] }}"
+base_rpmfusion_release_urls:
+  - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ base_fedora_version }}.noarch.rpm"
+  - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ base_fedora_version }}.noarch.rpm"
+
+# Hardware video decoding (VA-API) for both GPU makers: no detection, each driver only loads on its own
+# GPU. Disk only, no RAM. NVIDIA isn't a focus (decision 0019).
+base_video_drivers:
+  - intel-media-driver # Intel (RPM Fusion)
+  - mesa-va-drivers-freeworld # AMD, with the H.264/HEVC codecs Fedora's own build leaves out (RPM Fusion)
+
+base_packages:
+  - rsync # used by `mise run fetch-backups` to copy the backups off the box (nothing runs)

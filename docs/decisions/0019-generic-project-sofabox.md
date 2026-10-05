@@ -1,0 +1,21 @@
+# 0019 – A generic project: Sofabox, a fixed stack for any PC
+
+- **Status:** accepted. Changed: the repo holds default settings, and each box keeps its own choices in a git-ignored file.
+- **Context:** The repo was written for one box. Goal: anyone can turn their own old PC into the box, without making the repo bigger or harder to read.
+- **Decision:**
+  - **The stack is fixed:** one distro, one desktop, one browser, one way to do each thing. Nothing in it is optional.
+  - **Supported hardware:** any x86_64 laptop or desktop with an Intel or AMD GPU and HDMI to a TV. NVIDIA GPUs aren't a focus: nothing is done or tested for them. Hardware differences are handled the same way on every PC, with no detection.
+  - **What the Fedora installer already asks** (keyboard layout, language, timezone, hostname) is never a setting.
+  - **Everything else a person may change is a setting**, including which services run. The defaults, which work as they are, are versioned in `settings.yml`. A box's own choices go in a git-ignored file that overrides them (`host_vars/box/settings.yml`), holding only what it changes.
+  - **This repo is the project, not one person's box.** Anyone clones it (or forks it to change the code), and keeps their box's choices in their own git-ignored file.
+  - **Tested on one box.** Other PCs with the hardware above are supported, not tested.
+  - **Name:** Sofabox. **Licence:** MIT, short and with no conditions on forks.
+- **Rejected:**
+  - Supporting several distros, desktops or browsers: every option doubles what has to be tested and read.
+  - Hardware auto-detection: fragile. The same handling everywhere is simpler to understand.
+  - A generic engine running services from a list: each service has its own quirks and backup, so one plain role each is simpler.
+  - Committing each box's choices to the repo: the public repo would hold one person's box, and anyone else would have to fork it just to change a setting.
+  - A copyleft licence: its conditions only matter when redistributing, which a box config rarely is.
+- **Consequences:**
+  - Problems specific to another PC show up only when someone reports them.
+  - A box's own settings aren't versioned by the project: keeping a copy of them is up to its owner.
