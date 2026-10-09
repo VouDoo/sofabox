@@ -3,7 +3,7 @@
 Turn an old PC into a living-room media box. It works like an Android TV, built on open-source software: the only closed parts are what streaming sites require (DRM) and some hardware drivers.
 
 - Boots straight to the TV, with no login.
-- **Press Super (⊞)** to open the app menu: streaming sites, any website, a terminal. The list is yours to edit.
+- **Press Super (⊞)** to open the app menu: streaming sites, your own videos, any website, a terminal. The list is yours to edit.
 - Optional self-hosted services run in the background, each with its own nightly backup.
 - Updates itself at night, and sends an alert to your phone when something fails.
 - Fedora + labwc + Brave Origin + Podman, all configured by Ansible from this repo, in one command.

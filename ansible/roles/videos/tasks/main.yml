@@ -1,0 +1,34 @@
+- name: Install the video player (mpv) and its codecs
+  ansible.builtin.dnf5:
+    name: "{{ videos_packages }}"
+    state: present
+
+- name: Create the videos folder
+  ansible.builtin.file:
+    path: "{{ videos_dir }}"
+    state: directory
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0755"
+
+- name: Install the videos command (menu entry)
+  ansible.builtin.copy:
+    src: sofabox-videos.sh
+    dest: /usr/local/bin/sofabox-videos
+    mode: "0755"
+
+- name: Create the mpv config folder
+  ansible.builtin.file:
+    path: "{{ box_home }}/.config/mpv"
+    state: directory
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0755"
+
+- name: Configure the video player (mpv)
+  ansible.builtin.copy:
+    src: mpv.conf
+    dest: "{{ box_home }}/.config/mpv/mpv.conf"
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0644"

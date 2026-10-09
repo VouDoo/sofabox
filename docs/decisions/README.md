@@ -25,3 +25,4 @@ Numbers are fixed: a dropped decision keeps its number, marked as dropped.
 | [0017](0017-mise-tools-and-tasks.md) | mise for project tools and tasks |
 | [0018](0018-screens-kanshi.md) | Screens: the TV only, 1080p at 60 Hz by default, via kanshi |
 | [0019](0019-generic-project-sofabox.md) | Generic project: Sofabox, a fixed stack for any PC |
+| [0020](0020-local-videos-mpv.md) | Local videos: mpv, opened from the menu |

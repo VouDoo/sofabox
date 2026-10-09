@@ -25,5 +25,6 @@
     - { role: desktop, tags: desktop }
     - { role: browser, tags: browser }
     - { role: menu, tags: menu }
+    - { role: videos, tags: videos }
     # Services, only those listed in `services` (settings.yml). Each one brings Podman with it.
     - { role: mealie, tags: mealie, when: "'mealie' in services" }

@@ -45,6 +45,11 @@ How the box works, on any x86_64 PC with an Intel or AMD GPU ([0019](decisions/0
 - **Hardware video decoding** on Intel and AMD GPUs ([0008](decisions/0008-fedora.md)).
 - A site opens either as its own fullscreen app window, or as a normal window with tabs.
 
+### Videos ([0020](decisions/0020-local-videos-mpv.md))
+- **Your own video files** go in `~/Videos` on the box, copied over SSH with any tool. Subfolders are fine.
+- The **Videos** menu entry lists them in the same menu, and plays the chosen one fullscreen with **mpv**, decoded on the GPU.
+- Quitting a video remembers where it stopped, and subtitle files next to it are loaded.
+
 ### App menu ([0003](decisions/0003-super-key-menu.md), [0009](decisions/0009-labwc-custom-menu.md))
 - **Pressing and releasing Super** opens the menu, on top of anything, even fullscreen video. Super+key combos still work.
 - **Entries:** the `apps` list in `settings.yml`. Each one is a website (an app window, or a normal window with `tabs: true`) or a `command`. An entry with `service:` only shows when that service is listed.

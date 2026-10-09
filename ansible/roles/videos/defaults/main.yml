@@ -1,0 +1,6 @@
+# Where the videos go, copied over SSH. sofabox-videos lists ~/Videos: keep both the same.
+videos_dir: "{{ box_home }}/Videos"
+
+videos_packages:
+  - mpv # the player: only runs while a video plays
+  - ffmpeg-libs # all the codecs (RPM Fusion), instead of the cut-down build Fedora's mpv would pull in

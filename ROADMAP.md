@@ -9,6 +9,6 @@ Not planned, and maybe never: things worth looking at someday.
 - HTTPS, if a service ever requires it
 - Remote access
 - Dedicated TV shells: look at them again once they mature
-- Local media. Control from the TV remote (HDMI-CEC)
+- Control from the TV remote (HDMI-CEC)
 - Phone as a remote
 - Screensaver

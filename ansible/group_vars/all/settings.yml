@@ -15,6 +15,8 @@ apps:
     url: https://www.disneyplus.com
   - name: Twitch
     url: https://www.twitch.tv
+  - name: Videos
+    command: sofabox-videos
   - name: Mealie
     url: http://127.0.0.1:9000
     service: mealie
