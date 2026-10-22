@@ -11,6 +11,8 @@ apps:
     url: https://www.youtube.com
   - name: Netflix
     url: https://www.netflix.com
+  - name: Prime Video
+    url: https://www.primevideo.com
   - name: Disney+
     url: https://www.disneyplus.com
   - name: Twitch
