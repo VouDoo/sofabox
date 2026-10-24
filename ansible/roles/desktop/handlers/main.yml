@@ -6,7 +6,7 @@
     state: restarted
     daemon_reload: true
 
-# labwc re-reads rc.xml on SIGHUP, without closing any window.
+# labwc re-reads rc.xml and menu.xml on SIGHUP, without closing any window.
 - name: Reload labwc
   ansible.builtin.command: pkill --signal HUP --exact labwc
   register: desktop_reload_labwc

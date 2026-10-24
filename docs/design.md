@@ -55,6 +55,7 @@ How the box works, on any x86_64 PC with an Intel or AMD GPU ([0019](decisions/0
 - **Entries:** the `apps` list in `settings.yml`. Each one is a website (an app window, or a normal window with `tabs: true`) or a `command`. An entry with `service:` only shows when that service is listed.
 - **Opening an entry** that is already open focuses it instead of opening a duplicate.
 - **Typed text** that matches no entry opens as a website, or as a search (`search_url`).
+- **Desktop menu:** a click on the background opens a short menu: Apps, Restart and Shut down.
 - **Other keys:** `Super+Q` closes the current app, `Alt+Tab` switches between open apps. The keyboard's media keys control the volume, with an on-screen indicator.
 
 ## 5. Background services ([0007](decisions/0007-podman-quadlets.md))

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- Managed by Ansible (desktop role). labwc's desktop menu, opened by a click on the background.
+     Replaces labwc's built-in one, made for desktop use (Exit, Reconfigure…). -->
+<openbox_menu>
+  <menu id="root-menu">
+    <item label="Apps">
+      <action name="Execute" command="sofabox-menu"/>
+    </item>
+    <separator/>
+    <item label="Restart">
+      <action name="Execute" command="systemctl reboot"/>
+    </item>
+    <item label="Shut down">
+      <action name="Execute" command="systemctl poweroff"/>
+    </item>
+  </menu>
+</openbox_menu>

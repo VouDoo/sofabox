@@ -1,6 +1,19 @@
 <?xml version="1.0"?>
 <!-- Managed by Ansible (desktop role). labwc: keybinds and window rules. -->
 <labwc_config>
+  <theme>
+    <!-- The desktop menu (menu.xml) and the Alt+Tab switcher, readable from the couch like the app menu. -->
+    <font place="MenuItem">
+      <name>Noto Sans</name>
+      <size>24</size>
+      <weight>Medium</weight>
+    </font>
+    <font place="OnScreenDisplay">
+      <name>Noto Sans</name>
+      <size>24</size>
+      <weight>Medium</weight>
+    </font>
+  </theme>
   <keyboard>
     <!-- Press and release Super alone: open the app menu (menu role). -->
     <keybind key="Super_L" onRelease="yes">

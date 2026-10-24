@@ -15,6 +15,15 @@
     mode: "0644"
   notify: Reload labwc
 
+- name: Set up the desktop menu (menu.xml)
+  ansible.builtin.copy:
+    src: labwc/menu.xml
+    dest: "{{ box_home }}/.config/labwc/menu.xml"
+    owner: "{{ box_user }}"
+    group: "{{ box_user }}"
+    mode: "0644"
+  notify: Reload labwc
+
 # Chosen in the Fedora installer (decision 0019); labwc doesn't read it by itself.
 - name: Read the keyboard layout chosen at the Fedora install
   ansible.builtin.command: localectl status
