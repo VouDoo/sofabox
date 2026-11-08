@@ -11,3 +11,5 @@ background-color=#1c1c1ef2
 text-color=#f2f2f7
 progress-color=over #8e8e93
 default-timeout=3000
+# Above fullscreen windows, so the volume shows over a playing video.
+layer=overlay
