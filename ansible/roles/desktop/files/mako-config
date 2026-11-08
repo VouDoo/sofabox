@@ -13,3 +13,7 @@ progress-color=over #8e8e93
 default-timeout=3000
 # Above fullscreen windows, so the volume shows over a playing video.
 layer=overlay
+
+# Volume popup: mako fills the whole popup as its progress bar, so less padding makes a thinner bar.
+[app-name=volume]
+padding=6,20
